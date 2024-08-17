@@ -15,6 +15,45 @@ export const loginToEmp = createAsyncThunk(
   }
 );
 
+export const loginToEmp2 = createAsyncThunk(
+  'auth/loginToEmp2',
+  async (values, { rejectWithValue }) => {
+    try {
+      localStorage.setItem('Userinfo', JSON.stringify(values));
+      return {status : 200};
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const loginToEmp3 = createAsyncThunk(
+  'auth/loginToEmp3',
+  async (values, { rejectWithValue }) => {
+    try {
+      localStorage.setItem('PersonalUserinfo', JSON.stringify(values));
+      return {status : 200};
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const loginToEmp4 = createAsyncThunk(
+  'auth/loginToEmp3',
+  async (values, { rejectWithValue }) => {
+    try {
+      localStorage.setItem('BankInfo', JSON.stringify(values));
+      return {status : 200};
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+
+
 export const VerifyNumber = createAsyncThunk(
   'auth/VerifyNumber',
   async (values, { rejectWithValue }) => {

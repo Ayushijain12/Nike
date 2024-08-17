@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { TextField, Button, Grid, Typography, Box, Paper } from '@mui/material';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { loginToEmp, VerifyNumber } from '../redux/authSlice';
 import '../App.css';
 
-import SnackbarAlert from './CustomComponents/SnackbarAlert';
+import SnackbarAlert from '../components/CustomComponents/SnackbarAlert';
 
 const defaultTheme = createTheme();
 const validationSchema = Yup.object({
@@ -24,6 +25,8 @@ export default function SignInSide() {
 
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
+    const [initialValues, setInitialValues] = React.useState({ mobile: '' });
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,6 +46,14 @@ export default function SignInSide() {
             setMessage("Something Went Wrong!!")
         }
     }
+
+    useEffect(() => {
+        const mobile = localStorage.getItem('mobile');
+        if (mobile) {
+            setInitialValues({  mobile : mobile });
+        }
+
+      }, []);
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -78,11 +89,10 @@ export default function SignInSide() {
                              Nike User
                         </Typography>
                         <Formik
-                            initialValues={{
-                                mobile: '',
-                            }}
+                            initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={handSubmit}
+                            enableReinitialize={true}
                         >
                             {({ errors, touched }) => (
                                 <Form>
